@@ -19,8 +19,8 @@
                         <form action="{{ route('questions.store') }}" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="question-title">Title</label>
-                                <input type="text" name="title" id="question-title" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
+                                <label for="question-title">Question Title</label>
+                                <input type="text" name="title" id="question-title" value="{{ old('title') }}" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}">
 
                                 @if($errors->has('title'))
                                     <div class="invalid-feedback">
@@ -29,8 +29,8 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="question-body">Question</label>
-                                <textarea name="body" id="question-body" cols="30" rows="10" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}"></textarea>
+                                <label for="question-body">Explain Your Question</label>
+                                <textarea name="body" id="question-body" cols="30" rows="10" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}">{{ old('body') }}</textarea>
                                 @if($errors->has('body'))
                                     <div class="invalid-feedback">
                                         <string>{{ $errors->first('body') }}</string>
@@ -38,7 +38,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-outline-primary btn-lg">Ask</button>
+                                <button type="submit" class="btn btn-outline-primary btn-lg">Ask This Question</button>
                             </div>
                         </form>
                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
@@ -30,9 +31,11 @@ class QuestionsController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(AskQuestionRequest $request)
     {
-        //
+        $request->user()->questions()->create($request->only('title', 'body'));
+
+        return redirect()->route('questions.index')->with('success', 'Your Question Has Been Added Successfully'); // here embedded session message
     }
 
 

@@ -16,7 +16,8 @@
                     </div>
                     <div></div>
                     <div class="card-body">
-                       @foreach($questions as $question)
+                        @include('layouts._messages')
+                        @foreach($questions as $question)
                            <div class="media mb-5">
                                <div class="d-flex flex-column counters">
                                    <div class="vote">
@@ -39,7 +40,7 @@
                                    {{ Str::limit ($question->body, 250) }}
                                </div>
                            </div>
-                       @endforeach
+                        @endforeach
                         <div class="mt-1">
                             {{ $questions->links() }}
                         </div>
