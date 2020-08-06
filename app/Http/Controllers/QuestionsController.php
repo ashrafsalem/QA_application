@@ -47,13 +47,15 @@ class QuestionsController extends Controller
 
     public function edit(Question $question)
     {
-        //
+        return view('question.update', compact('question'));
     }
 
 
     public function update(Request $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+
+        return redirect('/questions')->with('success', 'the question has been updated');
     }
 
 
