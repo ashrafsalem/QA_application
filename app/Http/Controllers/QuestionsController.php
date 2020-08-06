@@ -9,6 +9,12 @@ use App\Http\Requests\AskQuestionRequest;
 class QuestionsController extends Controller
 {
 
+    public function __construct()
+    {
+        // auth for other, but any one can use show or index
+        $this->middleware('auth', ['except'=>['index', 'show']]);
+    }
+
     public function index()
     {
         // solving lazy loading problem , with eager Loading , solving alleviates n+1 problem
@@ -48,20 +54,27 @@ class QuestionsController extends Controller
 
     public function edit(Question $question)
     {
-        if(\Gate::denies('update-question', $question))
-        {
-            return abort(403, 'Access Denied');
-        }
+        // gate way
+//        if(\Gate::denies('update-question', $question))
+//        {
+//            return abort(403, 'Access Denied');
+//        }
+
+        // policy way
+        $this->authorize("update", $question);
         return view('question.update', compact('question'));
     }
 
 
     public function update(Request $request, Question $question)
     {
-        if(\Gate::denies('update-question', $question))
-        {
-            return abort(403, 'Access Denied');
-        }
+        // Gate way
+//        if(\Gate::denies('update-question', $question))
+//        {
+//            return abort(403, 'Access Denied');
+//        }
+        // policy way
+        $this->authorize('update', $question);
         $question->update($request->only('title', 'body'));
 
         return redirect('/questions')->with('success', 'the question has been updated');
@@ -70,10 +83,13 @@ class QuestionsController extends Controller
 
     public function destroy(Question $question)
     {
-        if(\Gate::denies('delete-question', $question))
-        {
-            return abort(403, 'Access Denied, Can\'t delete');
-        }
+        // Gate Way
+//        if(\Gate::denies('delete-question', $question))
+//        {
+//            return abort(403, 'Access Denied, Can\'t delete');
+//        }
+        // policy way
+        $this->authorize('delete', $question);
         $question->delete();
 
         return redirect('/questions')->with('success', 'Question has been deleted successfully');
