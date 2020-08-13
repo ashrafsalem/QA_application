@@ -20,4 +20,15 @@ class Answer extends Model
     {
         return $this->belongsTo(User::class);
     }
+    // elquant events
+    // events to edit columns in create or saved action
+    public static function boot()
+    {
+        parent::boot();
+        // increment answers_count in question table
+        // when answer created event fired
+        static::created(function($answer){
+            $answer->question->increment('answers_count');
+        });
+    }
 }
