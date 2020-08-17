@@ -31,4 +31,8 @@ class Answer extends Model
             $answer->question->increment('answers_count');
         });
     }
+
+    public function getCreateddateAttribute(){
+        return $this->created_at->diffForHumans();
+    }
 }
