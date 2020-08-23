@@ -33,7 +33,7 @@ class QuestionPolicy
     public function delete(User $user, Question $question)
     {
         // here if he own the question and no answer available yet you can delete else no
-        return $user->id == $question->user_id && $question->answers < 1;
+        return $user->id == $question->user_id && $question->answers->count() < 1;
     }
 
 }
