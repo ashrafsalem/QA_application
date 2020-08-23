@@ -36,12 +36,7 @@ class Answer extends Model
         });
         // decrement the answers count, in case of delete
         static::deleted(function ($answer){
-            $question = $answer->question;
-            $question->decrement('answers_count');
-            if($question->best_answer_id == $answer->id){
-                $question->best_answer_id = null;
-                $question->save();
-            }
+            $answer->question->decrement('answers_count');
         });
     }
 
