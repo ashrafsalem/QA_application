@@ -47,7 +47,6 @@ class Question extends Model
     {
         return \Parsedown::instance()->text($this->body);
     }
-
     public function answers()
     {
         return $this->hasMany(Answer::class);
@@ -57,6 +56,27 @@ class Question extends Model
     {
         $this->best_answer_id = $answer->id;
         $this->save();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimeStamps();
+    }
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    public function isFavorited()
+    {
+
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0;
+    }
+
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
     }
 }
 

@@ -78,8 +78,9 @@ form.form-style{
         }
 
         &.favorited, &favorited:hover{
-            color: $warning;
+            color: $orange;
         }
+
 
         &.vote-accepted{
             color:$green;
